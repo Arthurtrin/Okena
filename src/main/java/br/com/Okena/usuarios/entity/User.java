@@ -2,9 +2,15 @@ package br.com.Okena.usuarios.entity;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "usuarios")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -19,46 +25,22 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    private String bairro;
+    @Enumerated(EnumType.STRING)
+    private Bairro bairro;
 
     @Column(unique = true)
     private String cpf;
 
     private String senha;
 
-    public User() {
-    }
-
-    public User(String nome, String nomeDeUsuario, String email, String cpf, String senha) {
+    public User(String nome, String nomeDeUsuario, Bairro bairro, String email, String cpf, String senha) {
         this.nome = nome;
         this.nomeDeUsuario = nomeDeUsuario;
+        this.bairro = bairro;
         this.email = email;
         this.cpf = cpf;
         this.senha = senha;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getNomeDeUsuario() {
-        return nomeDeUsuario;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
 }
 

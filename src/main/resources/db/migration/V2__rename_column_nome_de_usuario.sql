@@ -1,0 +1,1 @@
+alter table usuarios rename column nomeDeUsuario to nome_de_usuario

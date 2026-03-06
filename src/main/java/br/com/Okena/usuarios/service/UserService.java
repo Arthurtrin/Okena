@@ -1,9 +1,11 @@
 package br.com.Okena.usuarios.service;
 
-import br.com.Okena.usuarios.dto.UserDTO;
+import br.com.Okena.usuarios.dto.UserInfoDTO;
+import br.com.Okena.usuarios.dto.UserRequestDTO;
 import br.com.Okena.usuarios.entity.Bairro;
+import br.com.Okena.usuarios.entity.User;
 import br.com.Okena.usuarios.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.Okena.usuarios.security.PasswordHasher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,27 +13,38 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository repository;
+    private final UserRepository repository;
 
-    public UserDTO userInfos() {
+    public UserService(UserRepository repository){
+        this.repository = repository;
+    }
+
+    public UserInfoDTO userInfos() {
         return toDTO(repository.count(),
                 repository.bairroComMaisUsuario(),
                 repository.bairroComMenosUsuario(),
                 repository.bairrosEmUso());
     }
 
-    private UserDTO toDTO(long qtdUsuarios,
-                          Bairro bairroMaisUsuario,
-                          Bairro bairroMenosUsuario,
-                          List<Bairro> bairrosEmUso) {
+    private UserInfoDTO toDTO(long qtdUsuarios,
+                              Bairro bairroMaisUsuario,
+                              Bairro bairroMenosUsuario,
+                              List<Bairro> bairrosEmUso) {
 
-        return new UserDTO(qtdUsuarios,
+        return new UserInfoDTO(qtdUsuarios,
                 bairroMaisUsuario,
                 bairroMenosUsuario, bairrosEmUso);
     }
 
 
+    public void criarUsuario(UserRequestDTO user) {
+        repository.save(fromRequestDtoToUser(user));
+    }
 
+    private User fromRequestDtoToUser(UserRequestDTO user){
+        return new User(user.nome(),
+                user.nomeDeUsuario(), Bairro.fromString(user.bairro()), user.email(),
+                user.cpf(), PasswordHasher.hash(user.senha()));
+    }
 
 }
