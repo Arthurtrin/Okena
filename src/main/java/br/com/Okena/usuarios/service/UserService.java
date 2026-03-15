@@ -47,4 +47,9 @@ public class UserService {
                 user.cpf(), PasswordHasher.hash(user.senha()));
     }
 
+    public User encontrarUsuario(Long usuarioId){
+        return repository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("usuario não encontrado"));
+    }
+
 }
