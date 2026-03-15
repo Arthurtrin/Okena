@@ -3,18 +3,26 @@ package br.com.Okena.report.entity;
 import br.com.Okena.usuarios.entity.Bairro;
 import br.com.Okena.usuarios.entity.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "report")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private User usuario;
 
     private String texto;
@@ -25,10 +33,8 @@ public class Report {
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
 
+    @Column(name = "data")
     private LocalDateTime dataPost;
-
-    public Report() {
-    }
 
     public Report(User user, String texto, Bairro bairro, Categoria categoria, LocalDateTime data) {
         this.usuario = user;
@@ -38,39 +44,11 @@ public class Report {
         this.dataPost = data;
     }
 
-    public Long getId() {
-        return Id;
+    public Report(String texto, Bairro bairro, Categoria categoria, LocalDateTime data) {
+        this.texto = texto;
+        this.bairro = bairro;
+        this.categoria = categoria;
+        this.dataPost = data;
     }
 
-    public User getUsuario() {
-        return usuario;
-    }
-
-    public String getTexto() {
-        return texto;
-    }
-
-    public Bairro getBairro() {
-        return bairro;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public LocalDateTime getDataPost() {
-        return dataPost;
-    }
-
-    @Override
-    public String toString() {
-        return "Report{" +
-                "Id=" + Id +
-                ", usuario=" + usuario +
-                ", texto='" + texto + '\'' +
-                ", bairro=" + bairro +
-                ", categoria=" + categoria +
-                ", dataPost=" + dataPost +
-                '}';
-    }
 }

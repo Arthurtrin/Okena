@@ -3,8 +3,13 @@ package br.com.Okena.report.controller;
 import br.com.Okena.report.dto.ReportRequestDTO;
 import br.com.Okena.report.dto.ReportRespondeDTO;
 import br.com.Okena.report.service.ReportService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,14 +22,15 @@ public class ReportController {
     @Autowired
     private ReportService service;
 
-    @PostMapping("/criar")
-    public void criarReport(@RequestBody ReportRequestDTO dadosReport){
-        service.criarReport(dadosReport);
-    }
-
     @GetMapping
-    public List<ReportRespondeDTO> obterReports(){
-        return service.obterReports();
+    public Page<ReportRespondeDTO> obterReports(@PageableDefault(size = 5, sort = {"dataPost"}) Pageable page){
+        return service.obterReports(page);
+    }
+    
+    @PostMapping("/criar")
+    @Transactional
+    public void criarReport(@RequestBody @Valid ReportRequestDTO dadosReport){
+        service.criarReport(dadosReport);
     }
 
     @GetMapping("/bairros")
@@ -38,7 +44,7 @@ public class ReportController {
     }
 
     @GetMapping("/bairro/{bairro}")
-    public ResponseEntity<?> obterBairros(@PathVariable String bairro){
+    public ResponseEntity<?> obterReportPorBairro(@PathVariable String bairro){
         try {
             return ResponseEntity.ok(service.obterReportsPorBairro(bairro));
         }catch (IllegalArgumentException e){

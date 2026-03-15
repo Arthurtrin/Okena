@@ -9,6 +9,8 @@ import br.com.Okena.usuarios.entity.Bairro;
 import br.com.Okena.usuarios.entity.User;
 import br.com.Okena.usuarios.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,15 +26,18 @@ public class ReportService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<ReportRespondeDTO> obterReports() {
-        return repository.findAllOrderByDataPost().stream()
-                .map(this::fromListToDTO).toList();
+    public Page<ReportRespondeDTO> obterReports(Pageable page) {
+        return repository.findAll(page).map(this::fromListToDTO);
     }
 
     private ReportRespondeDTO fromListToDTO(Report r){
-        return new ReportRespondeDTO(r.getTexto(), r.getCategoria().getCategoria(),
+        return new ReportRespondeDTO(
+                r.getTexto(),
+                r.getCategoria().getCategoria(),
                 r.getBairro().getBairro(),
-                r.getUsuario().getNomeDeUsuario(), r.getDataPost());
+                r.getUsuario() == null ? "anônimo" : r.getUsuario().getNomeDeUsuario(),
+                r.getDataPost()
+        );
     }
 
     public List<String> obterBairros() {
@@ -44,20 +49,31 @@ public class ReportService {
     }
 
     public List<ReportRespondeDTO> obterReportsPorBairro(String bairro) {
-        return repository.findByBairro(Bairro.fromString(bairro)).stream()
+        return repository.findByBairroOrderByDataPostDesc(Bairro.fromString(bairro)).stream()
                 .map(this::fromListToDTO).toList();
     }
 
     public void criarReport(ReportRequestDTO dadosReport) {
-        Report report = fromDtoToReport(dadosReport);
-        repository.save(report);
+        repository.save(fromDtoToReport(dadosReport));
     }
 
     private Report fromDtoToReport(ReportRequestDTO dadosReport) {
-        User usuario = encontrarUsuario(dadosReport.usuarioId());
-        Categoria categoria = Categoria.fromString(dadosReport.categoria());
-        Bairro bairro = Bairro.fromString(dadosReport.bairro());
-        return new Report(usuario, dadosReport.texto(), bairro, categoria, LocalDateTime.now().withNano(0));
+        if (dadosReport.usuarioId() == null){
+            return new Report(
+                    dadosReport.texto(),
+                    Bairro.fromString(dadosReport.bairro()),
+                    Categoria.fromString(dadosReport.categoria()),
+                    LocalDateTime.now().withNano(0)
+            );
+        } else {
+            return new Report(
+                    encontrarUsuario(dadosReport.usuarioId()),
+                    dadosReport.texto(),
+                    Bairro.fromString(dadosReport.bairro()),
+                    Categoria.fromString(dadosReport.categoria()),
+                    LocalDateTime.now().withNano(0)
+            );
+        }
     }
 
     private User encontrarUsuario(Long usuarioId){

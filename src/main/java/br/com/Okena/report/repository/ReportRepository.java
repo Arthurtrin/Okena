@@ -14,6 +14,6 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
     @Query("SELECT r FROM Report r ORDER BY r.dataPost DESC")
     List<Report> findAllOrderByDataPost();
 
-    List<Report> findByBairro(Bairro bairro);
+    List<Report> findByBairroOrderByDataPostDesc(Bairro bairro);
 
 }
