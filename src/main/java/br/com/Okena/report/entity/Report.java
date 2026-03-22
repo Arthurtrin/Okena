@@ -1,5 +1,6 @@
 package br.com.Okena.report.entity;
 
+import br.com.Okena.report.dto.ReportUpdateDTO;
 import br.com.Okena.usuarios.entity.Bairro;
 import br.com.Okena.usuarios.entity.User;
 import jakarta.persistence.*;
@@ -49,6 +50,16 @@ public class Report {
         this.bairro = bairro;
         this.categoria = categoria;
         this.dataPost = data;
+    }
+
+    public void updateReport(ReportUpdateDTO dados, User usuario){
+        this.usuario = usuario;
+        if(dados.texto() != null)
+            this.texto = dados.texto();
+        if(dados.bairro() != null)
+            this.bairro = Bairro.fromString(dados.bairro());
+        if(dados.categoria() != null)
+            this.categoria = Categoria.fromString(dados.categoria());
     }
 
 }

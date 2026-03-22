@@ -2,7 +2,9 @@ package br.com.Okena.report.controller;
 
 import br.com.Okena.report.dto.ReportRequestDTO;
 import br.com.Okena.report.dto.ReportRespondeDTO;
+import br.com.Okena.report.dto.ReportUpdateDTO;
 import br.com.Okena.report.service.ReportService;
+import jakarta.persistence.PostUpdate;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,18 +21,37 @@ import java.util.List;
 @RequestMapping("/report")
 public class ReportController {
 
-    @Autowired
-    private ReportService service;
+    private final ReportService service;
 
+    public ReportController(ReportService service){
+        this.service = service;
+    }
+
+    // READ
     @GetMapping
     public Page<ReportRespondeDTO> obterReports(@PageableDefault(size = 5, sort = {"dataPost"}) Pageable page){
         return service.obterReports(page);
     }
-    
-    @PostMapping("/criar")
+
+    // CREATE
+    @PostMapping()
     @Transactional
     public void criarReport(@RequestBody @Valid ReportRequestDTO dadosReport){
         service.criarReport(dadosReport);
+    }
+
+    //Update
+    @PutMapping
+    @Transactional
+    public void editarReport(@RequestBody ReportUpdateDTO reportUpdateDTO){
+        service.updateReport(reportUpdateDTO);
+    }
+
+    // DELETE
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void deletarReport(@PathVariable Long id){
+        service.deletarReport(id);
     }
 
     @GetMapping("/bairros")
