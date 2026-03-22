@@ -1,7 +1,7 @@
-package br.com.Okena.usuarios.repository;
+package br.com.Okena.user.repository;
 
-import br.com.Okena.usuarios.entity.Bairro;
-import br.com.Okena.usuarios.entity.User;
+import br.com.Okena.user.entity.Bairro;
+import br.com.Okena.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

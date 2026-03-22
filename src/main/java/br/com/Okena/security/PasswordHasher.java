@@ -1,4 +1,4 @@
-package br.com.Okena.usuarios.security;
+package br.com.Okena.security;
 
 import org.mindrot.jbcrypt.BCrypt;
 

@@ -1,4 +1,4 @@
-package br.com.Okena.usuarios.entity;
+package br.com.Okena.user.entity;
 
 
 import jakarta.persistence.*;

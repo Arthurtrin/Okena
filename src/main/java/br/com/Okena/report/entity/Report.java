@@ -1,14 +1,13 @@
 package br.com.Okena.report.entity;
 
 import br.com.Okena.report.dto.ReportUpdateDTO;
-import br.com.Okena.usuarios.entity.Bairro;
-import br.com.Okena.usuarios.entity.User;
+import br.com.Okena.user.entity.Bairro;
+import br.com.Okena.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity

@@ -54,16 +54,6 @@ public class ReportController {
         service.deletarReport(id);
     }
 
-    @GetMapping("/bairros")
-    public List<String> obterBairros(){
-        return service.obterBairros();
-    }
-
-    @GetMapping("/categorias")
-    public List<String> obterCategorias(){
-        return service.obterCategorias();
-    }
-
     @GetMapping("/bairro/{bairro}")
     public ResponseEntity<?> obterReportPorBairro(@PathVariable String bairro){
         try {

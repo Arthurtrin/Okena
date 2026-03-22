@@ -1,4 +1,4 @@
-package br.com.Okena.report.config;
+package br.com.Okena.config;
 
 
 import org.springframework.context.annotation.Configuration;

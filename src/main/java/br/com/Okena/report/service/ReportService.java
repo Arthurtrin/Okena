@@ -6,9 +6,9 @@ import br.com.Okena.report.dto.ReportUpdateDTO;
 import br.com.Okena.report.entity.Categoria;
 import br.com.Okena.report.entity.Report;
 import br.com.Okena.report.repository.ReportRepository;
-import br.com.Okena.usuarios.entity.Bairro;
-import br.com.Okena.usuarios.entity.User;
-import br.com.Okena.usuarios.service.UserService;
+import br.com.Okena.user.entity.Bairro;
+import br.com.Okena.user.entity.User;
+import br.com.Okena.user.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -98,20 +98,9 @@ public class ReportService {
         }
     }
 
-    /* ESTATISTICAS */
-    // Pega os valores de bairro
-    public List<String> obterBairros() {
-        return Stream.of(Bairro.values()).map(Bairro::getBairro).toList();
-    }
-
-    public List<String> obterCategorias() {
-        return Stream.of(Categoria.values()).map(Categoria::getCategoria).toList();
-    }
-
     public List<ReportRespondeDTO> obterReportsPorBairro(String bairro) {
         return reportRepository.findByBairroOrderByDataPostDesc(Bairro.fromString(bairro)).stream()
                 .map(this::fromListToDTO).toList();
     }
-
 
 }

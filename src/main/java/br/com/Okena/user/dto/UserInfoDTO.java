@@ -1,6 +1,6 @@
-package br.com.Okena.usuarios.dto;
+package br.com.Okena.user.dto;
 
-import br.com.Okena.usuarios.entity.Bairro;
+import br.com.Okena.user.entity.Bairro;
 
 import java.util.List;
 

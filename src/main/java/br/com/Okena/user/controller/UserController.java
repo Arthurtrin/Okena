@@ -1,8 +1,8 @@
-package br.com.Okena.usuarios.controller;
+package br.com.Okena.user.controller;
 
-import br.com.Okena.usuarios.dto.UserInfoDTO;
-import br.com.Okena.usuarios.dto.UserRequestDTO;
-import br.com.Okena.usuarios.service.UserService;
+import br.com.Okena.user.dto.UserInfoDTO;
+import br.com.Okena.user.dto.UserRequestDTO;
+import br.com.Okena.user.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +23,4 @@ public class UserController {
         service.criarUsuario(user);
     }
 
-    @GetMapping("/informacoes")
-    public UserInfoDTO info(){
-        return service.userInfos();
-    }
 }
