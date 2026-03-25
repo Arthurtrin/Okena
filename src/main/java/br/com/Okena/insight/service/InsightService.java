@@ -1,6 +1,5 @@
 package br.com.Okena.insight.service;
 
-import br.com.Okena.report.dto.ReportRespondeDTO;
 import br.com.Okena.report.entity.Categoria;
 import br.com.Okena.report.repository.ReportRepository;
 import br.com.Okena.user.dto.UserInfoDTO;

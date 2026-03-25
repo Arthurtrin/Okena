@@ -1,20 +1,16 @@
 package br.com.Okena.report.controller;
 
 import br.com.Okena.report.dto.ReportRequestDTO;
-import br.com.Okena.report.dto.ReportRespondeDTO;
+import br.com.Okena.report.dto.ReportResponseDTO;
 import br.com.Okena.report.dto.ReportUpdateDTO;
 import br.com.Okena.report.service.ReportService;
-import jakarta.persistence.PostUpdate;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController
@@ -29,7 +25,7 @@ public class ReportController {
 
     // READ
     @GetMapping
-    public Page<ReportRespondeDTO> obterReports(@PageableDefault(size = 5, sort = {"dataPost"}) Pageable page){
+    public Page<ReportResponseDTO> obterReports(@PageableDefault(size = 5, sort = {"dataPost"}) Pageable page){
         return service.obterReports(page);
     }
 

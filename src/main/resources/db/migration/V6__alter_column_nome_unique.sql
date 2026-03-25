@@ -1,0 +1,1 @@
+alter table bairro modify nome varchar(100) not null unique;

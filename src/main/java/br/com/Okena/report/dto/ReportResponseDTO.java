@@ -2,7 +2,7 @@ package br.com.Okena.report.dto;
 
 import java.time.LocalDateTime;
 
-public record ReportRespondeDTO(Long id,
+public record ReportResponseDTO(Long id,
                                 String texto,
                                 String categoria,
                                 String bairro,

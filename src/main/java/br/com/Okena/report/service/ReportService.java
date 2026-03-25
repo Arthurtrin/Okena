@@ -1,7 +1,7 @@
 package br.com.Okena.report.service;
 
 import br.com.Okena.report.dto.ReportRequestDTO;
-import br.com.Okena.report.dto.ReportRespondeDTO;
+import br.com.Okena.report.dto.ReportResponseDTO;
 import br.com.Okena.report.dto.ReportUpdateDTO;
 import br.com.Okena.report.entity.Categoria;
 import br.com.Okena.report.entity.Report;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 public class ReportService {
@@ -37,7 +36,7 @@ public class ReportService {
     }
 
     //READ - Obter reports com paginação
-    public Page<ReportRespondeDTO> obterReports(Pageable page) {
+    public Page<ReportResponseDTO> obterReports(Pageable page) {
         return reportRepository.findAll(page).map(this::fromListToDTO);
     }
 
@@ -67,8 +66,8 @@ public class ReportService {
 
     /* UTILS */
     // Tranforma uma instancia da entidade Report em um DTO para listagem
-    private ReportRespondeDTO fromListToDTO(Report r){
-        return new ReportRespondeDTO(
+    private ReportResponseDTO fromListToDTO(Report r){
+        return new ReportResponseDTO(
                 r.getId(),
                 r.getTexto(),
                 r.getCategoria().getCategoria(),
@@ -98,7 +97,7 @@ public class ReportService {
         }
     }
 
-    public List<ReportRespondeDTO> obterReportsPorBairro(String bairro) {
+    public List<ReportResponseDTO> obterReportsPorBairro(String bairro) {
         return reportRepository.findByBairroOrderByDataPostDesc(Bairro.fromString(bairro)).stream()
                 .map(this::fromListToDTO).toList();
     }
