@@ -5,6 +5,7 @@ import br.com.Okena.bairro.dto.BairroResponseDTO;
 import br.com.Okena.bairro.dto.BairroUpdateDTO;
 import br.com.Okena.bairro.entity.Bairro;
 import br.com.Okena.bairro.repository.BairroRepository;
+import br.com.Okena.infra.exceptions.BairroNotFoundException;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +49,11 @@ public class BairroService {
         Bairro bairro = bairroRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException(id, "Bairro"));
         return toResponse(bairro);
+    }
+
+    public Bairro getBairroById(Long id) {
+        return bairroRepository.findById(id)
+                .orElseThrow(() -> new BairroNotFoundException(id));
     }
 
     private BairroResponseDTO toResponse(Bairro b){

@@ -7,10 +7,12 @@ import br.com.Okena.report.service.ReportService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 
 @RestController
@@ -25,38 +27,39 @@ public class ReportController {
 
     // READ
     @GetMapping
-    public Page<ReportResponseDTO> obterReports(@PageableDefault(size = 5, sort = {"dataPost"}) Pageable page){
+    public ResponseEntity<Page<ReportResponseDTO>> obterReports(@PageableDefault(size = 5, sort = "dataPost", direction = Sort.Direction.DESC) Pageable page){
         return service.obterReports(page);
     }
 
     // CREATE
     @PostMapping()
     @Transactional
-    public void criarReport(@RequestBody @Valid ReportRequestDTO dadosReport){
-        service.criarReport(dadosReport);
+    public ResponseEntity criarReport(@RequestBody @Valid ReportRequestDTO dadosReport, UriComponentsBuilder uriBuilder){
+        return service.createReport(dadosReport, uriBuilder);
     }
 
     //Update
     @PutMapping
     @Transactional
-    public void editarReport(@RequestBody ReportUpdateDTO reportUpdateDTO){
-        service.updateReport(reportUpdateDTO);
+    public ResponseEntity editarReport(@RequestBody @Valid ReportUpdateDTO reportUpdateDTO){
+        return service.updateReport(reportUpdateDTO);
     }
 
     // DELETE
     @DeleteMapping("/{id}")
     @Transactional
-    public void deletarReport(@PathVariable Long id){
-        service.deletarReport(id);
+    public ResponseEntity deletarReport(@PathVariable Long id){
+        return service.deletarReport(id);
     }
 
-    @GetMapping("/bairro/{bairro}")
-    public ResponseEntity<?> obterReportPorBairro(@PathVariable String bairro){
-        try {
-            return ResponseEntity.ok(service.obterReportsPorBairro(bairro));
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.status(400).body(e.getMessage());
-        }
+    @GetMapping("/bairro/{bairroId}")
+    public Page<ReportResponseDTO> obterReportPorBairro(@PathVariable Long bairroId,
+                                                        @PageableDefault(
+                                                                size = 5,
+                                                                sort = "dataPost",
+                                                                direction = Sort.Direction.DESC)
+                                                        Pageable page){
+        return service.obterReportsPorBairro(bairroId, page);
     }
 
 }

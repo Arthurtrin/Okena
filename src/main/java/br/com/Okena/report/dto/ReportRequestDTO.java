@@ -4,12 +4,13 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record ReportRequestDTO(
-        @NotNull
+
         Long usuarioId,
+        @NotNull
+        Long bairroId,
         @NotBlank
         String texto,
         @NotBlank
-        String categoria,
-        @NotBlank
-        String bairro) {
+        String categoria
+        ) {
 }

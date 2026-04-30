@@ -1,7 +1,8 @@
 package br.com.Okena.report.entity;
 
+import br.com.Okena.bairro.entity.Bairro;
 import br.com.Okena.report.dto.ReportUpdateDTO;
-import br.com.Okena.user.entity.Bairro;
+
 import br.com.Okena.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,8 @@ public class Report {
 
     private String texto;
 
-    @Enumerated(EnumType.STRING)
+    @JoinColumn(name = "bairro_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Bairro bairro;
 
     @Enumerated(EnumType.STRING)
@@ -51,12 +53,11 @@ public class Report {
         this.dataPost = data;
     }
 
-    public void updateReport(ReportUpdateDTO dados, User usuario){
+    public void updateReport(ReportUpdateDTO dados, User usuario, Bairro bairro){
         this.usuario = usuario;
+        this.bairro = bairro;
         if(dados.texto() != null)
             this.texto = dados.texto();
-        if(dados.bairro() != null)
-            this.bairro = Bairro.fromString(dados.bairro());
         if(dados.categoria() != null)
             this.categoria = Categoria.fromString(dados.categoria());
     }

@@ -6,7 +6,8 @@ public record ReportUpdateDTO(
         @NotNull
         Long id,
         String texto,
-        String bairro,
+        @NotNull
+        Long bairroId,
         Long usuarioId,
         String categoria) {
 }

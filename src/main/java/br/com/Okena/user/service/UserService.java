@@ -1,14 +1,12 @@
 package br.com.Okena.user.service;
 
-import br.com.Okena.user.dto.UserInfoDTO;
+import br.com.Okena.infra.exceptions.UserNotFoundException;
 import br.com.Okena.user.dto.UserRequestDTO;
 import br.com.Okena.user.entity.Bairro;
 import br.com.Okena.user.entity.User;
 import br.com.Okena.user.repository.UserRepository;
 import br.com.Okena.security.PasswordHasher;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserService {
@@ -31,7 +29,7 @@ public class UserService {
 
     public User encontrarUsuario(Long usuarioId){
         return repository.findById(usuarioId)
-                .orElseThrow(() -> new RuntimeException("usuario não encontrado"));
+                .orElseThrow(() -> new UserNotFoundException(usuarioId));
     }
 
 }
