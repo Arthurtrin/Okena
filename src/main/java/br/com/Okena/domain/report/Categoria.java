@@ -1,6 +1,9 @@
 package br.com.Okena.domain.report;
 
 
+import lombok.Getter;
+
+@Getter
 public enum Categoria {
     ASSALTO("Assalto"),
     ILUMINACAO("Iluminação"),
@@ -11,10 +14,6 @@ public enum Categoria {
 
     Categoria(String categoria) {
         this.categoria = categoria;
-    }
-
-    public String getCategoria() {
-        return categoria;
     }
 
     public static Categoria fromString(String text) {

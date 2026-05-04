@@ -36,11 +36,14 @@ public class ReportService {
 
     /* CRUD */
     //CREATE - recebe um DTO, tranforma em uma instancia de Report e salva no banco
-    public ResponseEntity createReport(ReportRequestDTO dadosReport, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<DetailsDTO> createReport(ReportRequestDTO dadosReport, UriComponentsBuilder uriBuilder) {
         Report report = fromDtoToReport(dadosReport);
         reportRepository.save(report);
-        var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(report.getId()).toUri();
-        return ResponseEntity.created(uri).body(new DetailsDTO(report));
+        var uri = uriBuilder.path("/medicos/{id}")
+                .buildAndExpand(report.getId()).toUri();
+
+        return ResponseEntity.created(uri)
+                .body(new DetailsDTO(report));
     }
 
     //READ - Obter reports com paginação
@@ -50,7 +53,7 @@ public class ReportService {
     }
 
     //UPDATE - atualiza report pelo id
-    public ResponseEntity updateReport(ReportUpdateDTO dados) {
+    public ResponseEntity<DetailsDTO> updateReport(ReportUpdateDTO dados) {
         Report report = getById(dados.id());
         User user = null;
         Bairro bairro = bairroService.getBairroById(dados.bairroId());
@@ -63,7 +66,7 @@ public class ReportService {
     }
 
     //DELETE - Deleta report pelo id
-    public ResponseEntity deletarReport(Long id) {
+    public ResponseEntity<Void> deletarReport(Long id) {
         if(reportRepository.existsById(id))
             reportRepository.deleteById(id);
         else

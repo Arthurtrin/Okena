@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 
 
 public record BairroRequestDTO(
-        @NotBlank
+        @NotBlank(message = "{bairro.obrigatorio}")
         String nome,
         Double latitude,
         Double longitude

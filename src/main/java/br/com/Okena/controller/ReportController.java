@@ -1,5 +1,6 @@
 package br.com.Okena.controller;
 
+import br.com.Okena.domain.report.dto.DetailsDTO;
 import br.com.Okena.domain.report.dto.ReportRequestDTO;
 import br.com.Okena.domain.report.dto.ReportResponseDTO;
 import br.com.Okena.domain.report.dto.ReportUpdateDTO;
@@ -34,21 +35,21 @@ public class ReportController {
     // CREATE
     @PostMapping()
     @Transactional
-    public ResponseEntity criarReport(@RequestBody @Valid ReportRequestDTO dadosReport, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<DetailsDTO> criarReport(@RequestBody @Valid ReportRequestDTO dadosReport, UriComponentsBuilder uriBuilder){
         return service.createReport(dadosReport, uriBuilder);
     }
 
     //Update
     @PutMapping
     @Transactional
-    public ResponseEntity editarReport(@RequestBody @Valid ReportUpdateDTO reportUpdateDTO){
+    public ResponseEntity<DetailsDTO> editarReport(@RequestBody @Valid ReportUpdateDTO reportUpdateDTO){
         return service.updateReport(reportUpdateDTO);
     }
 
     // DELETE
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity deletarReport(@PathVariable Long id){
+    public ResponseEntity<Void> deletarReport(@PathVariable Long id){
         return service.deletarReport(id);
     }
 

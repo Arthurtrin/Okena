@@ -2,7 +2,7 @@ package br.com.Okena.infra.error;
 
 import java.time.LocalDateTime;
 
-public record ErrorDTO(
+public record ErrorResponseDTO(
         String mensagem,
         Integer status,
         LocalDateTime timestamp) {

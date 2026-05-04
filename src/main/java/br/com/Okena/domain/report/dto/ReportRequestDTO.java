@@ -6,11 +6,11 @@ import jakarta.validation.constraints.NotNull;
 public record ReportRequestDTO(
 
         Long usuarioId,
-        @NotNull
+        @NotNull(message = "{bairro.obrigatorio}")
         Long bairroId,
-        @NotBlank
+        @NotBlank(message = "{texto.obrigatorio}")
         String texto,
-        @NotBlank
+        @NotBlank(message = "{categoria.obrigatorio}")
         String categoria
         ) {
 }
