@@ -5,8 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record UserRequestDTO(
-        @NotNull
-        String bairro,
+        @NotNull(message = "{bairro.obrigatorio}")
+        Long bairroId,
 
         @NotBlank
         String cpf,
@@ -19,7 +19,7 @@ public record UserRequestDTO(
         String nome,
 
         @NotBlank
-        String nomeDeUsuario,
+        String login,
 
         @NotBlank
         String senha) {

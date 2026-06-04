@@ -1,10 +1,13 @@
 package br.com.Okena.controller;
 
+import br.com.Okena.domain.user.dto.DetailsUser;
 import br.com.Okena.domain.user.dto.UserRequestDTO;
 import br.com.Okena.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -16,10 +19,10 @@ public class UserController {
         this.service = service;
     }
 
-    @PostMapping("/criar")
+    @PostMapping()
     @Transactional
-    public void criarUsuario(@RequestBody @Valid UserRequestDTO user){
-        service.criarUsuario(user);
+    public ResponseEntity<DetailsUser> criarUsuario(@RequestBody @Valid UserRequestDTO user, UriComponentsBuilder uriBuilder){
+        return service.createUser(user, uriBuilder);
     }
 
 }

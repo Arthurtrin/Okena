@@ -88,7 +88,7 @@ public class ReportService {
                 r.getTexto(),
                 r.getCategoria().getCategoria(),
                 r.getBairro().getNome(),
-                r.getUsuario() == null ? "anônimo" : r.getUsuario().getNomeDeUsuario(),
+                r.getUsuario() == null ? "anônimo" : r.getUsuario().getLogin(),
                 r.getDataPost()
         );
     }

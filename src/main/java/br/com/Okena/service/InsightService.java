@@ -2,8 +2,6 @@ package br.com.Okena.service;
 
 import br.com.Okena.domain.report.Categoria;
 import br.com.Okena.repository.ReportRepository;
-import br.com.Okena.domain.user.dto.UserInfoDTO;
-import br.com.Okena.domain.user.Bairro;
 import br.com.Okena.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,30 +18,30 @@ public class InsightService {
         this.userRepository = userRepository;
     }
 
-    /* ESTATISTICAS */
-    // Pega os valores de bairro
-    public List<String> obterBairros() {
-        return Stream.of(Bairro.values()).map(Bairro::getBairro).toList();
-    }
-
+//    /* ESTATISTICAS */
+//    // Pega os valores de bairro
+//    public List<String> obterBairros() {
+//        return Stream.of(Bairro.values()).map(Bairro::getBairro).toList();
+//    }
+//
     public List<String> obterCategorias() {
         return Stream.of(Categoria.values()).map(Categoria::getCategoria).toList();
     }
-
-    public UserInfoDTO userInfos() {
-        return toDTO(userRepository.count(),
-                userRepository.bairroComMaisUsuario(),
-                userRepository.bairroComMenosUsuario(),
-                userRepository.bairrosEmUso());
-    }
-
-    private UserInfoDTO toDTO(long qtdUsuarios,
-                              Bairro bairroMaisUsuario,
-                              Bairro bairroMenosUsuario,
-                              List<Bairro> bairrosEmUso) {
-
-        return new UserInfoDTO(qtdUsuarios,
-                bairroMaisUsuario,
-                bairroMenosUsuario, bairrosEmUso);
-    }
+//
+//    public UserInfoDTO userInfos() {
+//        return toDTO(userRepository.count(),
+//                userRepository.bairroComMaisUsuario(),
+//                userRepository.bairroComMenosUsuario(),
+//                userRepository.bairrosEmUso());
+//    }
+//
+//    private UserInfoDTO toDTO(long qtdUsuarios,
+//                              Bairro bairroMaisUsuario,
+//                              Bairro bairroMenosUsuario,
+//                              List<Bairro> bairrosEmUso) {
+//
+//        return new UserInfoDTO(qtdUsuarios,
+//                bairroMaisUsuario,
+//                bairroMenosUsuario, bairrosEmUso);
+//    }
 }
