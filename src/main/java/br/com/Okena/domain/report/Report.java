@@ -1,6 +1,5 @@
 package br.com.Okena.domain.report;
 
-import br.com.Okena.domain.bairro.Bairro;
 import br.com.Okena.domain.report.dto.ReportUpdateDTO;
 
 import br.com.Okena.domain.user.User;
@@ -28,9 +27,13 @@ public class Report {
 
     private String texto;
 
-    @JoinColumn(name = "bairro_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Bairro bairro;
+    //Endereço
+    private Double latitude;
+    private Double longitude;
+    private String estado;
+    private String cidade;
+    private String bairro;
+    private String logradouro;
 
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
@@ -38,24 +41,53 @@ public class Report {
     @Column(name = "data")
     private LocalDateTime dataPost;
 
-    public Report(User user, String texto, Bairro bairro, Categoria categoria, LocalDateTime data) {
+    public Report(
+            User user,
+            String texto,
+            String estado,
+            String cidade,
+            String bairro,
+            String logradouro,
+            Double latitude,
+            Double longitude,
+            Categoria categoria,
+            LocalDateTime data) {
+
         this.usuario = user;
         this.texto = texto;
+        this.estado = estado;
+        this.cidade = cidade;
         this.bairro = bairro;
+        this.logradouro = logradouro;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.categoria = categoria;
         this.dataPost = data;
     }
 
-    public Report(String texto, Bairro bairro, Categoria categoria, LocalDateTime data) {
+    public Report(String texto,
+                  String estado,
+                  String cidade,
+                  String bairro,
+                  String logradouro,
+                  Double latitude,
+                  Double longitude,
+                  Categoria categoria,
+                  LocalDateTime data) {
+
         this.texto = texto;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.estado = estado;
+        this.cidade = cidade;
         this.bairro = bairro;
+        this.logradouro = logradouro;
         this.categoria = categoria;
         this.dataPost = data;
     }
 
-    public void updateReport(ReportUpdateDTO dados, User usuario, Bairro bairro){
+    public void updateReport(ReportUpdateDTO dados, User usuario){
         this.usuario = usuario;
-        this.bairro = bairro;
         if(dados.texto() != null)
             this.texto = dados.texto();
         if(dados.categoria() != null)

@@ -1,12 +1,9 @@
 package br.com.Okena.service;
 
-import br.com.Okena.domain.bairro.Bairro;
-import br.com.Okena.domain.report.dto.DetailsDTO;
-import br.com.Okena.domain.report.dto.ReportRequestDTO;
-import br.com.Okena.domain.report.dto.ReportResponseDTO;
-import br.com.Okena.domain.report.dto.ReportUpdateDTO;
+import br.com.Okena.domain.report.dto.*;
 import br.com.Okena.domain.report.Categoria;
 import br.com.Okena.domain.report.Report;
+import br.com.Okena.domain.report.dto.address.NominatimResponseDTO;
 import br.com.Okena.infra.error.exceptions.ReportNotFoundException;
 import br.com.Okena.repository.ReportRepository;
 import br.com.Okena.domain.user.User;
@@ -23,15 +20,16 @@ public class ReportService {
 
     private final ReportRepository reportRepository;
     private final UserService userService;
-    private final BairroService bairroService;
+    private final GeocodingService geocodingService;
 
     // Injeção de dependencias
     public ReportService(ReportRepository reportRepository,
                          UserService userService,
-                         BairroService bairroService){
+                         GeocodingService geocodingService){
         this.reportRepository = reportRepository;
         this.userService = userService;
-        this.bairroService = bairroService;
+        this.geocodingService = geocodingService;
+
     }
 
     /* CRUD */
@@ -39,7 +37,7 @@ public class ReportService {
     public ResponseEntity<DetailsDTO> createReport(ReportRequestDTO dadosReport, UriComponentsBuilder uriBuilder) {
         Report report = fromDtoToReport(dadosReport);
         reportRepository.save(report);
-        var uri = uriBuilder.path("/medicos/{id}")
+        var uri = uriBuilder.path("/reports/{id}")
                 .buildAndExpand(report.getId()).toUri();
 
         return ResponseEntity.created(uri)
@@ -56,12 +54,11 @@ public class ReportService {
     public ResponseEntity<DetailsDTO> updateReport(ReportUpdateDTO dados) {
         Report report = getById(dados.id());
         User user = null;
-        Bairro bairro = bairroService.getBairroById(dados.bairroId());
 
         if(dados.usuarioId() != null)
             user = userService.encontrarUsuario(dados.usuarioId());
 
-        report.updateReport(dados, user, bairro);
+        report.updateReport(dados, user);
         return ResponseEntity.ok(new DetailsDTO(report));
     }
 
@@ -87,20 +84,34 @@ public class ReportService {
                 r.getId(),
                 r.getTexto(),
                 r.getCategoria().getCategoria(),
-                r.getBairro().getNome(),
-                r.getBairro().getLatitude(),
-                r.getBairro().getLongitude(),
+                r.getLatitude(),
+                r.getLongitude(),
+                r.getEstado(),
+                r.getCidade(),
+                r.getBairro(),
+                r.getLogradouro(),
                 r.getUsuario() == null ? "anônimo" : r.getUsuario().getLogin(),
                 r.getDataPost()
         );
     }
 
+
     // Transforma um DTO em uma instancia da entidade Report
     private Report fromDtoToReport(ReportRequestDTO dadosReport) {
+        NominatimResponseDTO enderecoDTO = geocodingService
+                .buscarEndereco(dadosReport.latitude(),
+                        dadosReport.longitude());
+
+
         if (dadosReport.usuarioId() == null){
             return new Report(
                     dadosReport.texto(),
-                    bairroService.getBairroById(dadosReport.bairroId()),
+                    enderecoDTO.address().estado(),
+                    enderecoDTO.address().cidade(),
+                    enderecoDTO.address().bairro(),
+                    enderecoDTO.address().logradouro(),
+                    dadosReport.latitude(),
+                    dadosReport.longitude(),
                     Categoria.fromString(dadosReport.categoria()),
                     LocalDateTime.now().withNano(0)
             );
@@ -108,16 +119,21 @@ public class ReportService {
             return new Report(
                     userService.encontrarUsuario(dadosReport.usuarioId()),
                     dadosReport.texto(),
-                    bairroService.getBairroById(dadosReport.bairroId()),
+                    enderecoDTO.address().estado(),
+                    enderecoDTO.address().cidade(),
+                    enderecoDTO.address().bairro(),
+                    enderecoDTO.address().logradouro(),
+                    dadosReport.latitude(),
+                    dadosReport.longitude(),
                     Categoria.fromString(dadosReport.categoria()),
                     LocalDateTime.now().withNano(0)
             );
         }
     }
 
-    public Page<ReportResponseDTO> obterReportsPorBairro(Long bairroId, Pageable page) {
+    /**public Page<ReportResponseDTO> obterReportsPorBairro(Long bairroId, Pageable page) {
         Bairro bairro = bairroService.getBairroById(bairroId);
         return reportRepository.findByBairro(bairro, page).map(this::fromReportToDTO);
-    }
+    }*/
 
 }

@@ -28,7 +28,7 @@ public class ReportController {
 
     // READ
     @GetMapping
-    public ResponseEntity<Page<ReportResponseDTO>> obterReports(@PageableDefault(size = 5, sort = "dataPost", direction = Sort.Direction.DESC) Pageable page){
+    public ResponseEntity<Page<ReportResponseDTO>> obterReports(@PageableDefault(size =30, sort = "dataPost", direction = Sort.Direction.DESC) Pageable page){
         return service.obterReports(page);
     }
 
@@ -53,7 +53,7 @@ public class ReportController {
         return service.deletarReport(id);
     }
 
-    @GetMapping("/bairro/{bairroId}")
+    /*@GetMapping("/bairro/{bairroId}")
     public Page<ReportResponseDTO> obterReportPorBairro(@PathVariable Long bairroId,
                                                         @PageableDefault(
                                                                 size = 5,
@@ -61,6 +61,6 @@ public class ReportController {
                                                                 direction = Sort.Direction.DESC)
                                                         Pageable page){
         return service.obterReportsPorBairro(bairroId, page);
-    }
+    }*/
 
 }

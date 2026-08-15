@@ -8,8 +8,6 @@ public record ReportUpdateDTO(
         Long id,
         @NotBlank(message = "{texto.obrigatorio}")
         String texto,
-        @NotNull(message = "{bairro.obrigatorio}")
-        Long bairroId,
         Long usuarioId,
         @NotBlank(message = "{categoria.obrigatorio}")
         String categoria) {

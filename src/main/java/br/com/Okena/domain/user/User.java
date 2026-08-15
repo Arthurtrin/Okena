@@ -1,6 +1,5 @@
 package br.com.Okena.domain.user;
 
-import br.com.Okena.domain.bairro.Bairro;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -34,19 +33,15 @@ public class User implements UserDetails {
     @Email
     private String email;
 
-    @JoinColumn(name = "bairro_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Bairro bairro;
 
     @Column(unique = true)
     private String cpf;
 
     private String senha;
 
-    public User(String nome, String login, Bairro bairro, String email, String cpf, String senha) {
+    public User(String nome, String login, String email, String cpf, String senha) {
         this.nome = nome;
         this.login = login;
-        this.bairro = bairro;
         this.email = email;
         this.cpf = cpf;
         this.senha = senha;

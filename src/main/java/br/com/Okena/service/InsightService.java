@@ -27,6 +27,7 @@ public class InsightService {
     public List<String> obterCategorias() {
         return Stream.of(Categoria.values()).map(Categoria::getCategoria).toList();
     }
+
 //
 //    public UserInfoDTO userInfos() {
 //        return toDTO(userRepository.count(),
