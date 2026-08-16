@@ -1,5 +1,6 @@
 package br.com.Okena.controller;
 
+import br.com.Okena.domain.insight.dto.*;
 import br.com.Okena.service.InsightService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +18,44 @@ public class InsightController {
         this.service = service;
     }
 
-//    @GetMapping("/bairros")
-//    public List<String> obterBairros(){
-//        return service.obterBairros();
-//    }
-//
+    @GetMapping
+    public InsigthDTO obterInsight(){
+        return service.obterInsigths();
+    }
+
+
+    @GetMapping("/resumo")
+    public ResumoDTO obterResumo(){
+        return service.resumo();
+    }
+
+    @GetMapping("/report-por-categoria")
+    public List<ReportPorCategoriaDTO> obterReportPorCategoria(){
+        return service.reportPorCategoria();
+    }
+
+    @GetMapping("/em-alta")
+    public List<EmAltaDTO> ObterEmAltaDTO(){
+        return service.reportsEmAltaDTO();
+    }
+
+    @GetMapping("/evolucao-temporal")
+    public List<EvolucaoTemporalDTO> ObterEvolucaoTemporal(){
+        return service.evolucaoTemporal();
+    }
+
+    @GetMapping("/bairros-com-mais-reports")
+    public List<BairrosComMaisOcorrenciasDTO> obterBairrosComMaisOcorrencias(){
+        return service.buscarBairrosComMaisOcorrencias();
+    }
+
+    @GetMapping("/cidades-com-mais-reports")
+    public List<CidadesComMaisOcorrenciasDTO> obterCidadesComMaisOcorrencias(){
+        return service.buscarCidadesComMaisOcorrencias();
+    }
+
+
+
     @GetMapping("/categorias")
     public List<String> obterCategorias(){
         return service.obterCategorias();
