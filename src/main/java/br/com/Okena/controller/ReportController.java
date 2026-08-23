@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -35,8 +36,16 @@ public class ReportController {
     // CREATE
     @PostMapping()
     @Transactional
-    public ResponseEntity<DetailsDTO> criarReport(@RequestBody @Valid ReportRequestDTO dadosReport, UriComponentsBuilder uriBuilder){
-        return service.createReport(dadosReport, uriBuilder);
+    public ResponseEntity<DetailsDTO> criarReport(
+            @RequestBody @Valid ReportRequestDTO dadosReport,
+            UriComponentsBuilder uriBuilder,
+            Authentication authentication
+    ){
+        return service.createReport(
+                dadosReport,
+                uriBuilder,
+                authentication
+        );
     }
 
     //Update

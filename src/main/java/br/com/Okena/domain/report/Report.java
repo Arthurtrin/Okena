@@ -25,6 +25,8 @@ public class Report {
     @ManyToOne(fetch = FetchType.LAZY)
     private User usuario;
 
+    private boolean anonimo;
+
     private String texto;
 
     //Endereço
@@ -43,6 +45,7 @@ public class Report {
 
     public Report(
             User user,
+            boolean anonimo,
             String texto,
             String estado,
             String cidade,
@@ -54,6 +57,7 @@ public class Report {
             LocalDateTime data) {
 
         this.usuario = user;
+        this.anonimo = anonimo;
         this.texto = texto;
         this.estado = estado;
         this.cidade = cidade;

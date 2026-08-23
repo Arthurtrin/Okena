@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record ReportRequestDTO(
 
-        Long usuarioId,
+        boolean anonimo,
         Double latitude,
         Double longitude,
         @NotBlank(message = "{texto.obrigatorio}")
