@@ -17,8 +17,14 @@ public class UserService {
 
     public UserService(UserRepository repository){
         this.userRepository = repository;
+    }
 
+    public User encontrarPorLogin(String login) {
 
+        return userRepository.findUserByLogin(login)
+                .orElseThrow(() ->
+                        new RuntimeException("Usuário não encontrado")
+                );
     }
 
     public ResponseEntity<DetailsUser> createUser(UserRequestDTO userRequestDTO, UriComponentsBuilder uriBuilder){
