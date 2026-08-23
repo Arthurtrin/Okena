@@ -1,1 +1,0 @@
-alter table usuarios modify senha varchar(100) not null;
