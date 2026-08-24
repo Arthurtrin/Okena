@@ -13,7 +13,9 @@ public class CorsConfiguration implements WebMvcConfigurer {
                 .allowedOrigins(
                         "http://192.168.1.6:5173",
                         "http://localhost:5173",
-                        "https://okena-hub-front.vercel.app"
+                        "https://okena-hub-front.vercel.app",
+                        "https://www.okenahub.com.br",
+                        "https://okenahub.com.br"
                 )
                 .allowedMethods(
                         "GET",
