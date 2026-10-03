@@ -2,7 +2,7 @@ package br.com.Okena.service;
 
 import br.com.Okena.domain.report.dto.*;
 import br.com.Okena.domain.report.Categoria;
-import br.com.Okena.domain.report.Report;
+import br.com.Okena.domain.interacao.Report;
 import br.com.Okena.domain.report.dto.address.NominatimResponseDTO;
 import br.com.Okena.infra.error.exceptions.ReportNotFoundException;
 import br.com.Okena.repository.ReportRepository;

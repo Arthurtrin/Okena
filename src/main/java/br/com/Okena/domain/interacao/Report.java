@@ -1,5 +1,6 @@
-package br.com.Okena.domain.report;
+package br.com.Okena.domain.interacao;
 
+import br.com.Okena.domain.report.Categoria;
 import br.com.Okena.domain.report.dto.ReportUpdateDTO;
 
 import br.com.Okena.domain.user.User;
@@ -28,6 +29,10 @@ public class Report {
     private boolean anonimo;
 
     private String texto;
+
+    private Long confirmacoes;
+    private Long contestacoes;
+    private Long aprovacoes;
 
     //Endereço
     private Double latitude;
