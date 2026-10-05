@@ -1,17 +1,19 @@
-package br.com.Okena.domain.report;
+package br.com.Okena.domain.interacao;
 
-import br.com.Okena.domain.interacao.Report;
-import br.com.Okena.domain.interacao.TipoInteracao;
+import br.com.Okena.domain.interacao.dto.InteracaoRequestDTO;
+import br.com.Okena.domain.report.Report;
 import br.com.Okena.domain.user.User;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "interacao",
@@ -42,4 +44,10 @@ public class Interacao {
     @Column(name = "data")
     private LocalDateTime dataInteracao;
 
+    public Interacao(User user, Report report, TipoInteracao tipoInteracao, LocalDateTime data) {
+        this.usuario = user;
+        this.report = report;
+        this.tipoInteracao = tipoInteracao;
+        this.dataInteracao = data;
+    }
 }

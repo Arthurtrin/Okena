@@ -1,7 +1,7 @@
 package br.com.Okena.repository;
 
 import br.com.Okena.domain.insight.dto.*;
-import br.com.Okena.domain.interacao.Report;
+import br.com.Okena.domain.report.Report;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -14,6 +14,9 @@ CREATE TABLE report (
                         texto VARCHAR(255),
                         latitude DOUBLE,
                         longitude DOUBLE,
+                        confirmacoes BIGINT NOT NULL DEFAULT 0,
+                        contestacoes BIGINT NOT NULL DEFAULT 0,
+                        aprovacoes BIGINT NOT NULL DEFAULT 0,
                         estado VARCHAR(255),
                         cidade VARCHAR(255),
                         bairro VARCHAR(255),
@@ -28,17 +31,20 @@ CREATE TABLE report (
 
 CREATE TABLE interacao (
                            id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                           usuario_id BIGINT,
-                           report_id BIGINT,
-                           tipo_interacao VARCHAR(255),
-                           data DATETIME,
+                           usuario_id BIGINT NOT NULL,
+                           report_id BIGINT NOT NULL,
+                           tipo_interacao VARCHAR(255) NOT NULL,
+                           data DATETIME NOT NULL,
 
-                           CONSTRAINT fk_report_usuario
+                           CONSTRAINT fk_interacao_usuario
                                FOREIGN KEY (usuario_id)
                                    REFERENCES usuarios(id),
 
-                           CONSTRAINT fk_report_report
-                                FOREIGN KEY (report_id)
-                                   REFERENCES report(id)
+                           CONSTRAINT fk_interacao_report
+                               FOREIGN KEY (report_id)
+                                   REFERENCES report(id),
+
+                           CONSTRAINT uk_interacao_usuario_report
+                               UNIQUE (usuario_id, report_id)
 );
 

@@ -1,6 +1,6 @@
 package br.com.Okena.domain.report.dto;
 
-import br.com.Okena.domain.interacao.Report;
+import br.com.Okena.domain.report.Report;
 import br.com.Okena.domain.user.User;
 
 import java.time.LocalDateTime;

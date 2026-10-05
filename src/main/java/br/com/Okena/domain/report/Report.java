@@ -1,6 +1,5 @@
-package br.com.Okena.domain.interacao;
+package br.com.Okena.domain.report;
 
-import br.com.Okena.domain.report.Categoria;
 import br.com.Okena.domain.report.dto.ReportUpdateDTO;
 
 import br.com.Okena.domain.user.User;
@@ -8,12 +7,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "report")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Report {
@@ -30,9 +31,9 @@ public class Report {
 
     private String texto;
 
-    private Long confirmacoes;
-    private Long contestacoes;
-    private Long aprovacoes;
+    private Long confirmacoes = 0L;
+    private Long contestacoes = 0L;
+    private Long aprovacoes = 0L;
 
     //Endereço
     private Double latitude;

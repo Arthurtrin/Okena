@@ -2,7 +2,7 @@ package br.com.Okena.service;
 
 import br.com.Okena.domain.report.dto.*;
 import br.com.Okena.domain.report.Categoria;
-import br.com.Okena.domain.interacao.Report;
+import br.com.Okena.domain.report.Report;
 import br.com.Okena.domain.report.dto.address.NominatimResponseDTO;
 import br.com.Okena.infra.error.exceptions.ReportNotFoundException;
 import br.com.Okena.repository.ReportRepository;
@@ -66,9 +66,7 @@ public class ReportService {
 
     /* READ */
 
-    public ResponseEntity<Page<ReportResponseDTO>> obterReports(
-            Pageable page
-    ) {
+    public ResponseEntity<Page<ReportResponseDTO>> obterReports(Pageable page) {
 
         Page<ReportResponseDTO> pageReport =
                 reportRepository
@@ -145,6 +143,9 @@ public class ReportService {
                 r.getCategoria().getCategoria(),
                 r.getLatitude(),
                 r.getLongitude(),
+                r.getConfirmacoes(),
+                r.getContestacoes(),
+                r.getAprovacoes(),
                 r.getEstado(),
                 r.getCidade(),
                 r.getBairro(),
