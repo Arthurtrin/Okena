@@ -7,12 +7,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "report")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Report {
@@ -28,6 +30,10 @@ public class Report {
     private boolean anonimo;
 
     private String texto;
+
+    private Long confirmacoes = 0L;
+    private Long contestacoes = 0L;
+    private Long aprovacoes = 0L;
 
     //Endereço
     private Double latitude;

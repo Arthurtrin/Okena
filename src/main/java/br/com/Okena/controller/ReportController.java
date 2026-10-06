@@ -29,7 +29,7 @@ public class ReportController {
 
     // READ
     @GetMapping
-    public ResponseEntity<Page<ReportResponseDTO>> obterReports(@PageableDefault(size =30, sort = "dataPost", direction = Sort.Direction.DESC) Pageable page){
+    public ResponseEntity<Page<ReportResponseDTO>> obterReports(@PageableDefault(size =100, sort = "dataPost", direction = Sort.Direction.DESC) Pageable page){
         return service.obterReports(page);
     }
 

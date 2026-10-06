@@ -69,7 +69,8 @@ public class InsightService {
         LocalDateTime inicio = LocalDate.now()
                 .minusDays(6)
                 .atStartOfDay();
-
+        System.out.println("INICIO: " + inicio);
+        System.out.println(reportRepository.evolucaoTemporal(inicio));
         return reportRepository.evolucaoTemporal(inicio);
     }
 

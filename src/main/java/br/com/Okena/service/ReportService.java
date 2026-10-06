@@ -66,9 +66,7 @@ public class ReportService {
 
     /* READ */
 
-    public ResponseEntity<Page<ReportResponseDTO>> obterReports(
-            Pageable page
-    ) {
+    public ResponseEntity<Page<ReportResponseDTO>> obterReports(Pageable page) {
 
         Page<ReportResponseDTO> pageReport =
                 reportRepository
@@ -145,6 +143,9 @@ public class ReportService {
                 r.getCategoria().getCategoria(),
                 r.getLatitude(),
                 r.getLongitude(),
+                r.getConfirmacoes(),
+                r.getContestacoes(),
+                r.getAprovacoes(),
                 r.getEstado(),
                 r.getCidade(),
                 r.getBairro(),
